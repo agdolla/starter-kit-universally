@@ -1,3 +1,5 @@
+import set from 'lodash/set';
+
 /**
  * Unified Configuration Reader
  *
@@ -53,6 +55,13 @@ function resolveConfigForBrowserOrServer() {
 }
 
 // EXPORT
+export function setConfig(path, value) {
+  if (!configCache) {
+    throw new Error('Config has not been resolved');
+  }
+
+  set(configCache, path, value);
+}
 
 /**
  * This function wraps up the boilerplate needed to access the correct
