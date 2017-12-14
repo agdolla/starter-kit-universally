@@ -40,13 +40,15 @@ const values = {
   // The host on which the server should bind to.
   host: EnvVars.string('HOST', 'localhost'),
 
-  // The port on which the server should bind to.
+  // The port on which the server should bind to,
+  // if in development and the port is in use it will increment this number and test again.
   port: EnvVars.number('PORT', 3000),
 
   // Should the webpack dev server be proxied through the public url
   clientDevProxy: EnvVars.bool('CLIENT_DEV_PROXY', false),
 
-  // The port on which the client bundle development server should run.
+  // Prefered port on which the client bundle development server should run,
+  // if port is in use it will increment this number and test again.
   clientDevServerPort: EnvVars.number('CLIENT_DEV_PORT', 7331),
 
   // This is an example environment variable which is used within the react
