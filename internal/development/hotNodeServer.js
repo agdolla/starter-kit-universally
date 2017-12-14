@@ -5,7 +5,7 @@ import { log } from '../utils';
 
 class HotNodeServer {
 
-  constructor(name, compiler, clientCompiler) {
+  constructor(name, compiler, clientCompiler, env) {
     const compiledEntryFile = path.resolve(
       appRootDir.get(),
       compiler.options.output.path,
@@ -26,8 +26,7 @@ class HotNodeServer {
 
       // pass all args to our spawn
       const args = process.argv.slice(2);
-
-      const newServer = spawn('node', [compiledEntryFile, '--color', ...args]);
+      const newServer = spawn('node', [compiledEntryFile, '--color', ...args], { env });
 
       log({
         title: name,

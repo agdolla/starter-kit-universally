@@ -8,7 +8,7 @@ import config, { setConfig } from '../../config';
 const preferredPort = config('port');
 const preferredDevPort = config('clientDevServerPort');
 
-getPorts([preferredPort, preferredDevPort], (err, [port, clientDevServerPort]) => {
+getPorts([preferredPort, preferredDevPort], (err, [PORT, CLIENT_DEV_PORT]) => {
   if (err) {
     log({
       title: 'dev',
@@ -17,15 +17,12 @@ getPorts([preferredPort, preferredDevPort], (err, [port, clientDevServerPort]) =
     });
     return;
   }
-  // has to be set before spawning the `hotNodeServer`
-  process.env.PORT = port;
-  process.env.CLIENT_DEV_PORT = clientDevServerPort;
 
-  setConfig('port', port);
-  setConfig('clientDevServerPort', clientDevServerPort);
+  setConfig('port', PORT);
+  setConfig('clientDevServerPort', CLIENT_DEV_PORT);
 
   let HotDevelopment = require('./hotDevelopment').default;
-  let devServer = new HotDevelopment();
+  let devServer = new HotDevelopment({ ...process.env, PORT, CLIENT_DEV_PORT });
 
   // Any changes to our webpack bundleConfigs should restart the development devServer.
   const watcher = chokidar.watch([

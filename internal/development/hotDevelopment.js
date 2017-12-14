@@ -63,7 +63,7 @@ const initializeBundle = (name, bundleConfig) => {
 
 class HotDevelopment {
 
-  constructor() {
+  constructor(env) {
     this.hotClientServer = null;
     this.hotNodeServers = [];
 
@@ -103,7 +103,7 @@ class HotDevelopment {
         this.hotNodeServers = nodeBundles.map(
           ({ name, createCompiler }) =>
             // $FlowFixMe
-            new HotNodeServer(name, createCompiler(), clientCompiler),
+            new HotNodeServer(name, createCompiler(), clientCompiler, env),
         );
       });
   }
